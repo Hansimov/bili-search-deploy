@@ -1,0 +1,9 @@
+FROM ubuntu:jammy
+WORKDIR /app
+ARG UBUNTU_MIRROR
+# Replace sources list
+#   - https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/
+RUN echo "deb $UBUNTU_MIRROR jammy main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb $UBUNTU_MIRROR jammy-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb $UBUNTU_MIRROR jammy-backports main restricted universe multiverse" >> /etc/apt/sources.list
+RUN apt-get update && apt-get install -y git
