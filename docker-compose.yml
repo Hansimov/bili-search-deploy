@@ -1,0 +1,28 @@
+services:
+  bili-seach-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile_backend
+      args:
+        UBUNTU_MIRROR: http://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+        PIP_MIRROR: https://pypi.tuna.tsinghua.edu.cn/simple
+        COMMIT_HASH: bff1209
+        PORT: 21001
+    image: bili-search
+    network_mode: host
+    volumes:
+      - ../bili-search/configs/secrets.json:/app/configs/secrets.json
+      - ../bili-search/configs/elastic_ca.crt:/app/configs/elastic_ca.crt
+  bili-seach-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile_frontend
+      args:
+        UBUNTU_MIRROR: http://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+        NPM_MIRROR: https://registry.npmmirror.com
+        COMMIT_HASH: 9295b6a
+        PORT: 9000
+    image: bili-search-ui
+    network_mode: host
+# sudo usermod -aG docker $USER && newgrp docker
+# docker compose up --build
