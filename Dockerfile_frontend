@@ -5,6 +5,7 @@ ARG DEV_BACKEND_PORT
 ARG BACKEND_PORT
 ARG DEV_FRONTEND_PORT
 ARG FRONTEND_PORT
+ENV FRONTEND_PORT=$FRONTEND_PORT
 RUN apt-get update && apt-get install -y curl
 # Install node.js 18.x
 #   - https://github.com/nodesource/distributions
@@ -17,9 +18,11 @@ WORKDIR /app/quasar
 # Replace dev port with production port
 RUN sed -i "s/${DEV_BACKEND_PORT}/${BACKEND_PORT}/g" quasar.config.js
 RUN sed -i "s/${DEV_FRONTEND_PORT}/${FRONTEND_PORT}/g" quasar.config.js
+RUN sed -i "s/${DEV_BACKEND_PORT}/${BACKEND_PORT}/g" proxy.mjs
 # Install quasar and dependencies
 RUN npm config set registry $NPM_MIRROR
 RUN npm i -g @quasar/cli
 RUN npm install
+RUN quasar build
 EXPOSE $FRONTEND_PORT
-CMD quasar dev
+CMD quasar serve ./dist/spa --proxy proxy.mjs -p $FRONTEND_PORT --history
