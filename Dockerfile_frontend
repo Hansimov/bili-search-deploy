@@ -1,7 +1,10 @@
 FROM bili-search-base:latest
 ARG NPM_MIRROR
 ARG COMMIT_HASH
-ARG PORT
+ARG DEV_BACKEND_PORT
+ARG BACKEND_PORT
+ARG DEV_FRONTEND_PORT
+ARG FRONTEND_PORT
 RUN apt-get update && apt-get install -y curl
 # Install node.js 18.x
 #   - https://github.com/nodesource/distributions
@@ -11,8 +14,12 @@ RUN apt-get install -y nodejs
 # Use stable version
 RUN git clone https://githubfast.com/Hansimov/bili-search-ui.git . && git checkout $COMMIT_HASH
 WORKDIR /app/quasar
+# Replace dev port with production port
+RUN sed -i "s/${DEV_BACKEND_PORT}/${BACKEND_PORT}/g" quasar.config.js
+RUN sed -i "s/${DEV_FRONTEND_PORT}/${FRONTEND_PORT}/g" quasar.config.js
+# Install quasar and dependencies
 RUN npm config set registry $NPM_MIRROR
 RUN npm i -g @quasar/cli
 RUN npm install
-EXPOSE $PORT
-CMD ["quasar", "dev"]
+EXPOSE $FRONTEND_PORT
+CMD quasar dev

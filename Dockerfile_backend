@@ -1,11 +1,13 @@
 FROM bili-search-base:latest
 ARG PIP_MIRROR
 ARG COMMIT_HASH
-ARG PORT
+ARG BACKEND_PORT
+ENV BACKEND_PORT=$BACKEND_PORT
 RUN apt-get update && apt-get install -y python3 python3-pip
 # Use stable version
 RUN git clone https://githubfast.com/Hansimov/bili-search.git . && git checkout $COMMIT_HASH
-# https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
+# Install python dependencies
+#   - https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
 RUN pip3 install -i $PIP_MIRROR --no-cache-dir -r /app/requirements.txt
-EXPOSE $PORT
-CMD ["python3", "-m", "apps.search_app"]
+EXPOSE $BACKEND_PORT
+CMD python3 -m apps.search_app -p $BACKEND_PORT
