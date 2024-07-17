@@ -20,8 +20,8 @@ services:
     image: bili-search
     network_mode: host
     volumes:
-      - ../bili-search/configs/secrets.json:/app/configs/secrets.json
-      - ../bili-search/configs/elastic_ca.crt:/app/configs/elastic_ca.crt
+      - ../bili-search/configs/secrets.json:/app/bili-search/configs/secrets.json
+      - ../bili-search/configs/elastic_ca.crt:/app/bili-search/configs/elastic_ca.crt
   bili-seach-frontend:
     depends_on:
       - bili-search-base

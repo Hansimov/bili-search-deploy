@@ -7,8 +7,9 @@ ARG DEV_FRONTEND_PORT
 ARG FRONTEND_PORT
 ENV FRONTEND_PORT=$FRONTEND_PORT
 # Use stable version
-RUN git clone https://githubfast.com/Hansimov/bili-search-ui.git . && git checkout $COMMIT_HASH
-WORKDIR /app/quasar
+RUN git clone https://githubfast.com/Hansimov/bili-search-ui.git bili-search-ui
+WORKDIR /app/bili-search-ui/quasar
+RUN git checkout $COMMIT_HASH
 # Replace dev port with production port
 RUN sed -i "s/${DEV_BACKEND_PORT}/${BACKEND_PORT}/g" quasar.config.js
 RUN sed -i "s/${DEV_FRONTEND_PORT}/${FRONTEND_PORT}/g" quasar.config.js
