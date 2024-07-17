@@ -6,12 +6,6 @@ ARG BACKEND_PORT
 ARG DEV_FRONTEND_PORT
 ARG FRONTEND_PORT
 ENV FRONTEND_PORT=$FRONTEND_PORT
-RUN apt-get update && apt-get install -y curl
-# Install node.js 18.x
-#   - https://github.com/nodesource/distributions
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x -o ~/nodesource_setup.sh
-RUN bash ~/nodesource_setup.sh
-RUN apt-get install -y nodejs
 # Use stable version
 RUN git clone https://githubfast.com/Hansimov/bili-search-ui.git . && git checkout $COMMIT_HASH
 WORKDIR /app/quasar
@@ -19,9 +13,8 @@ WORKDIR /app/quasar
 RUN sed -i "s/${DEV_BACKEND_PORT}/${BACKEND_PORT}/g" quasar.config.js
 RUN sed -i "s/${DEV_FRONTEND_PORT}/${FRONTEND_PORT}/g" quasar.config.js
 RUN sed -i "s/${DEV_BACKEND_PORT}/${BACKEND_PORT}/g" proxy.mjs
-# Install quasar and dependencies
+# Install dependencies
 RUN npm config set registry $NPM_MIRROR
-RUN npm i -g @quasar/cli
 RUN npm install
 RUN quasar build
 EXPOSE $FRONTEND_PORT

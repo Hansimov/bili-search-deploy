@@ -3,7 +3,6 @@ ARG PIP_MIRROR
 ARG COMMIT_HASH
 ARG BACKEND_PORT
 ENV BACKEND_PORT=$BACKEND_PORT
-RUN apt-get update && apt-get install -y python3 python3-pip
 # Use stable version
 RUN git clone https://githubfast.com/Hansimov/bili-search.git . && git checkout $COMMIT_HASH
 # Install python dependencies
