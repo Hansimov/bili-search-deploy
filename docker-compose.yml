@@ -15,7 +15,7 @@ services:
       dockerfile: Dockerfile_backend
       args:
         PIP_MIRROR: https://pypi.tuna.tsinghua.edu.cn/simple
-        COMMIT_HASH: 722b7905fda1961f8cde8b7cccc701133dfc0626
+        COMMIT_HASH: 8886ff21e2093a1583bd3feb92547e39a3110481
         BACKEND_PORT: 20001
     image: bili-search
     network_mode: host
@@ -30,7 +30,7 @@ services:
       dockerfile: Dockerfile_frontend
       args:
         NPM_MIRROR: https://registry.npmmirror.com
-        COMMIT_HASH: 1e0f967df4bc95d40f2ac0f137d9343ef4751aaa
+        COMMIT_HASH: 67c09f0a4801e9c3bfd63b96431d089b02656c47
         DEV_BACKEND_PORT: 21001
         BACKEND_PORT: 20001
         DEV_FRONTEND_PORT: 21002
