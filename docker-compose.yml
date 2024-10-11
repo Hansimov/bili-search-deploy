@@ -15,7 +15,7 @@ services:
       dockerfile: Dockerfile_backend
       args:
         PIP_MIRROR: https://pypi.tuna.tsinghua.edu.cn/simple
-        COMMIT_HASH: 0170e47401a5c1fe08e86dc65b39063754580a8f
+        COMMIT_HASH: 38de01da659e1faf0861bebdcfa263a80174031e
         BACKEND_PORT: 20001
     image: bili-search
     network_mode: host
