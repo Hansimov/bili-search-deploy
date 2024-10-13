@@ -30,7 +30,7 @@ services:
       dockerfile: Dockerfile_frontend
       args:
         NPM_MIRROR: https://registry.npmmirror.com
-        COMMIT_HASH: 202075c6c6eb6382887264ebd19136d4b0248d80
+        COMMIT_HASH: 665f2629c484a0956dad94f8d4815b9240da8913
         DEV_BACKEND_PORT: 21001
         BACKEND_PORT: 20001
         DEV_FRONTEND_PORT: 21002
