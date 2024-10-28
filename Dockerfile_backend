@@ -1,8 +1,6 @@
 FROM bili-search-base:latest
 ARG PIP_MIRROR
 ARG COMMIT_HASH
-ARG BACKEND_PORT
-ENV BACKEND_PORT=$BACKEND_PORT
 # Use stable version
 RUN git clone https://githubfast.com/Hansimov/bili-search.git bili-search
 WORKDIR /app/bili-search
@@ -10,5 +8,3 @@ RUN git checkout $COMMIT_HASH
 # Install python dependencies
 #   - https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
 RUN pip3 install -i $PIP_MIRROR --no-cache-dir -r ./requirements.txt
-EXPOSE $BACKEND_PORT
-CMD python3 -m apps.search_app -p $BACKEND_PORT -m prod

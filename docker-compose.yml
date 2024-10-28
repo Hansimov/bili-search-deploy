@@ -1,28 +1,38 @@
 services:
-  bili-search-base:
+  blbltop-base:
     build:
       context: .
       dockerfile: Dockerfile_base
       args:
         UBUNTU_MIRROR: http://mirrors.tuna.tsinghua.edu.cn/ubuntu/
         NPM_MIRROR: https://registry.npmmirror.com
-    image: bili-search-base
-  bili-seach-backend:
+    image: blbltop-base
+
+  blbltop-backend:
     depends_on:
-      - bili-search-base
+      - blbltop-base
     build:
       context: .
       dockerfile: Dockerfile_backend
       args:
         PIP_MIRROR: https://pypi.tuna.tsinghua.edu.cn/simple
-        COMMIT_HASH: 7cfa1ea4578f9097b71e170ab67f0c9828668ac6
-        BACKEND_PORT: 20001
-    image: bili-search
+        COMMIT_HASH: 4c50f6439e7066185dc2135905fa7f54945d937e
+    image: blbltop-backend
     network_mode: host
     volumes:
       - ../bili-search/configs/secrets.json:/app/bili-search/configs/secrets.json
       - ../bili-search/configs/elastic_ca.crt:/app/bili-search/configs/elastic_ca.crt
-  bili-seach-frontend:
+
+  blbltop-search:
+    extends:
+      service: blbltop-backend
+    command: python3 -m apps.search_app -p 20001 -m prod
+
+  blbltop-websocket:
+    extends:
+      service: blbltop-backend
+    command: python3 -m apps.websocket_app -p 20003 -m prod
+
     depends_on:
       - bili-search-base
     build:
