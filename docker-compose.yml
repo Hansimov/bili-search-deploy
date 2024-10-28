@@ -33,19 +33,22 @@ services:
       service: blbltop-backend
     command: python3 -m apps.websocket_app -p 20003 -m prod
 
+  blbltop-frontend:
     depends_on:
-      - bili-search-base
+      - blbltop-base
     build:
       context: .
       dockerfile: Dockerfile_frontend
       args:
         NPM_MIRROR: https://registry.npmmirror.com
-        COMMIT_HASH: bd3eaefcfbe94f1551086e907b447de003f981c9
-        DEV_BACKEND_PORT: 21001
-        BACKEND_PORT: 20001
-        DEV_FRONTEND_PORT: 21002
-        FRONTEND_PORT: 20002
-    image: bili-search-ui
+        COMMIT_HASH: 13439c823dc42bb77640f5f8c85e002efb5ad234
+        DEV_SEARCH_PORT: 21001
+        SEARCH_PORT: 20001
+        DEV_WEBSOCKET_PORT: 21003
+        WEBSOCKET_PORT: 20003
+        DEV_UI_PORT: 21002
+        UI_PORT: 20002
+    image: blbltop-frontend
     network_mode: host
 # sudo usermod -aG docker $USER && newgrp docker
 # docker compose up --build

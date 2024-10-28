@@ -1,22 +1,31 @@
 FROM bili-search-base:latest
 ARG NPM_MIRROR
 ARG COMMIT_HASH
-ARG DEV_BACKEND_PORT
-ARG BACKEND_PORT
-ARG DEV_FRONTEND_PORT
-ARG FRONTEND_PORT
-ENV FRONTEND_PORT=$FRONTEND_PORT
+# port args
+ARG DEV_SEARCH_PORT
+ARG SEARCH_PORT
+ARG DEV_WEBSOCKET_PORT
+ARG WEBSOCKET_PORT
+ARG DEV_UI_PORT
+ARG UI_PORT
+# port envs
+ENV SEARCH_PORT=$SEARCH_PORT
+ENV WEBSOCKET_PORT=$WEBSOCKET_PORT
+ENV UI_PORT=$UI_PORT
 # Use stable version
 RUN git clone https://githubfast.com/Hansimov/bili-search-ui.git bili-search-ui
 WORKDIR /app/bili-search-ui/quasar
 RUN git checkout $COMMIT_HASH
-# Replace dev port with production port
-RUN sed -i "s/${DEV_BACKEND_PORT}/${BACKEND_PORT}/g" quasar.config.js
-RUN sed -i "s/${DEV_FRONTEND_PORT}/${FRONTEND_PORT}/g" quasar.config.js
-RUN sed -i "s/${DEV_BACKEND_PORT}/${BACKEND_PORT}/g" proxy.mjs
+# Replace port from dev to prod in `quasar.config.js`
+RUN sed -i "s/${DEV_SEARCH_PORT}/${SEARCH_PORT}/g" quasar.config.js
+RUN sed -i "s/${DEV_WEBSOCKET_PORT}/${WEBSOCKET_PORT}/g" quasar.config.js
+RUN sed -i "s/${DEV_UI_PORT}/${UI_PORT}/g" quasar.config.js
+# Replace port from dev to prod in `proxy.mjs`
+RUN sed -i "s/${DEV_SEARCH_PORT}/${SEARCH_PORT}/g" proxy.mjs
+RUN sed -i "s/${DEV_WEBSOCKET_PORT}/${WEBSOCKET_PORT}/g" proxy.mjs
 # Install dependencies
 RUN npm config set registry $NPM_MIRROR
 RUN npm install
 RUN quasar build
-EXPOSE $FRONTEND_PORT
-CMD quasar serve ./dist/spa --proxy proxy.mjs -p $FRONTEND_PORT --history
+EXPOSE $UI_PORT
+CMD quasar serve ./dist/spa --proxy proxy.mjs -p $UI_PORT --history
