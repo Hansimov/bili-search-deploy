@@ -8,6 +8,10 @@ RUN echo "deb $UBUNTU_MIRROR jammy main restricted universe multiverse" > /etc/a
     echo "deb $UBUNTU_MIRROR jammy-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
     echo "deb $UBUNTU_MIRROR jammy-backports main restricted universe multiverse" >> /etc/apt/sources.list
 RUN apt-get update && apt-get install -y git curl
+# Install tzdata
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Shanghai
+RUN apt-get install -y tzdata
 # Install python and pip
 RUN apt-get install -y python3 python3-pip
 # Install node.js 18.x
