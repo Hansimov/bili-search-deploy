@@ -1,4 +1,4 @@
-FROM bili-search-base:latest
+FROM blbltop-base:latest
 ARG NPM_MIRROR
 ARG COMMIT_HASH
 # port args
@@ -13,9 +13,9 @@ ENV SEARCH_PORT=$SEARCH_PORT
 ENV WEBSOCKET_PORT=$WEBSOCKET_PORT
 ENV UI_PORT=$UI_PORT
 # Use stable version
-RUN git clone https://githubfast.com/Hansimov/bili-search-ui.git bili-search-ui
+RUN git clone https://gitee.com/Hansimov/bili-search-ui.git bili-search-ui
 WORKDIR /app/bili-search-ui/quasar
-RUN git checkout $COMMIT_HASH
+RUN git checkout $COMMIT_HASH -f
 # Replace port from dev to prod in `quasar.config.js`
 RUN sed -i "s/${DEV_SEARCH_PORT}/${SEARCH_PORT}/g" quasar.config.js
 RUN sed -i "s/${DEV_WEBSOCKET_PORT}/${WEBSOCKET_PORT}/g" quasar.config.js

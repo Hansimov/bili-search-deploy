@@ -1,8 +1,8 @@
-FROM bili-search-base:latest
+FROM blbltop-base:latest
 ARG PIP_MIRROR
 ARG COMMIT_HASH
 # Use stable version
-RUN git clone https://githubfast.com/Hansimov/bili-search.git bili-search
+RUN git clone https://gitee.com/Hansimov/bili-search.git bili-search
 WORKDIR /app/bili-search
 RUN git checkout $COMMIT_HASH
 # Install python dependencies
