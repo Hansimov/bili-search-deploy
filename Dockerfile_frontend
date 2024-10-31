@@ -15,7 +15,7 @@ ENV UI_PORT=$UI_PORT
 # Use stable version
 RUN git clone https://gitee.com/Hansimov/bili-search-ui.git bili-search-ui
 WORKDIR /app/bili-search-ui/quasar
-RUN git checkout $COMMIT_HASH -f
+RUN git fetch && git checkout $COMMIT_HASH
 # Replace port from dev to prod in `quasar.config.js`
 RUN sed -i "s/${DEV_SEARCH_PORT}/${SEARCH_PORT}/g" quasar.config.js
 RUN sed -i "s/${DEV_WEBSOCKET_PORT}/${WEBSOCKET_PORT}/g" quasar.config.js
@@ -28,4 +28,5 @@ RUN npm config set registry $NPM_MIRROR
 RUN npm install
 RUN quasar build
 EXPOSE $UI_PORT
-CMD quasar serve ./dist/spa --proxy proxy.mjs -p $UI_PORT --history
+# CMD quasar serve ./dist/spa --proxy proxy.mjs -p $UI_PORT --history
+CMD ["sh", "-c", "quasar serve ./dist/spa --proxy proxy.mjs -p $UI_PORT --history"]
