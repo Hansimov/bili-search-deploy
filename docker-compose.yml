@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile_backend
       args:
         PIP_MIRROR: https://pypi.tuna.tsinghua.edu.cn/simple
-        COMMIT_HASH: 08092212068be7016b849824c8b78c255dcc38b2
+        COMMIT_HASH: 55ba22fbe32ea966830f8f9ed8b148de9d108957
     image: blbltop-backend
     network_mode: host
     volumes:
@@ -41,7 +41,7 @@ services:
       dockerfile: Dockerfile_frontend
       args:
         NPM_MIRROR: https://registry.npmmirror.com
-        COMMIT_HASH: 713c23765a0a66dda054ee258dd08b54acfd3f09
+        COMMIT_HASH: deaf4eeeeefd4f46dd21a93c8ac7822645a56398
         DEV_SEARCH_PORT: 21001
         SEARCH_PORT: 20001
         DEV_WEBSOCKET_PORT: 21003
